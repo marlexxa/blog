@@ -10,3 +10,11 @@
                   } %></li>
   <li><%= link_to "All articles", root_path() %></li>
 </ul>
+
+<h2>Comments</h2>
+<%= render @article.comments %>
+
+<h3>Add a comment:</h3>
+<%= render 'comments/form' %>
+
+
