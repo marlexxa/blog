@@ -8,5 +8,9 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :create]
 
   get 'sign-up', to: 'users#new'
+  get 'log-in', to: 'sessions#new'
+  post 'log-in', to: 'sessions#create'
+  delete 'log-out', to: 'sessions#destroy'
+
 
 end

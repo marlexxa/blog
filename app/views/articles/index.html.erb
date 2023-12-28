@@ -1,7 +1,14 @@
 <p style="color: green"><%= notice %></p>
+
+<% if @_current_user %>
+  <%= button_to 'Log out', log_out_path(@_current_user), method: :delete %>
+<% else %>
+  <%= link_to 'Log in', log_in_path  %>
+  <%= link_to 'Sign up', sign_up_path %>
+<% end %>
+
 <h1 >Articles</h1>
 Our blog has <%= Article.public_count %> articles and counting!
-
 
 <ul>
   <% @articles.each do |article| %>

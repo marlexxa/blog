@@ -8,15 +8,15 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
+def create
   @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.html {redirect_to user_path(@user), notice: 'User was successfully created.'}
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+  respond_to do |format|
+    if @user.save
+      format.html {redirect_to log_in_path, notice: 'User was successfully created.'}
+    else
+      format.html { render :new, status: :unprocessable_entity }
     end
+  end
 end
 
   private
