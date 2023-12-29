@@ -13,12 +13,15 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @article.user = current_user
 
+    respond_to do |format|
     if @article.save
-      redirect_to @article
+      format.html {redirect_to @article, notice: 'Article was successfully created!'}
     else
-      render :new, status: :unprocessable_entity
+      format.html { render :new, status: :unprocessable_entity }
     end
+  end
   end
 
   def edit
@@ -28,11 +31,13 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
 
-    if @article.update(article_params)
-      redirect_to @article
+    respond_to do |format|
+    if @article.update(post_params)
+      format.html { redirect_to article_url(@article), notice: "Article was successfully updated!" }
     else
-      render :edit, status: :unprocessable_entity
+      format.html { render :edit, status: :unprocessable_entity }
     end
+  end
   end
 
   def destroy
@@ -40,11 +45,12 @@ class ArticlesController < ApplicationController
     @article.destroy
 
     redirect_to root_path, status: :see_other
+    flash[:notice] = 'Article was successfully deleted!'
   end
-
+  
   private
     def article_params
-      params.require(:article).permit(:title, :body, :status)
+      params.require(:article).permit(:title, :body, :status, :user_id)
     end
 
 end
