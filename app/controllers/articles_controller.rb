@@ -1,4 +1,7 @@
 class ArticlesController < ApplicationController
+  before_action :not_logged_in, only: :new
+  before_action :not_found, :incorrect_user, only: %i[edit update destroy]
+
   def index
     @articles = Article.all
   end
@@ -47,8 +50,22 @@ class ArticlesController < ApplicationController
     redirect_to root_path, status: :see_other
     flash[:notice] = 'Article was successfully deleted!'
   end
-  
+
   private
+    def not_logged_in
+      redirect_to log_in_path unless current_user
+      flash[:notice] = 'You must be logged in to publish.'
+    end
+
+    def not_found
+      raise ActionController::RoutingError.new('Not Found') unless current_user
+    end
+
+    def incorrect_user
+      @article = Article.find(params[:id])
+      raise ActionController::RoutingError.new('Not Found') unless current_user && current_user == @article.user
+    end
+
     def article_params
       params.require(:article).permit(:title, :body, :status, :user_id)
     end

@@ -20,4 +20,7 @@ Our blog has <%= Article.public_count %> articles and counting!
   <% end %>
 </ul>
 
-<%= link_to "Want to create new article?", new_article_path %>
+<% if @_current_user %>
+  <%= link_to "Want to create new article?", new_article_path %>
+<% end %>
+

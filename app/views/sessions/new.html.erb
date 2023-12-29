@@ -1,5 +1,5 @@
 <p style="color: green"><%= notice %></p>
-<h1> Log inn </h1>
+<h1> Log in </h1>
 <p>or <%= link_to 'Sign up', sign_up_path %></p>
 <%= form_with url: log_in_path  do |form| %>
   <p><%= form.label :email %></p>
@@ -8,3 +8,7 @@
   <p><%= form.password_field :password, required: true %></p>
   <p><%= form.submit 'Log in' %></p>
 <% end %>
+<p>
+  <%= link_to "Back", root_path %>
+</p>
+
